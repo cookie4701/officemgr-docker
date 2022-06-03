@@ -1,7 +1,9 @@
 ARG ALPINE_VERSION=3.15
 FROM alpine:${ALPINE_VERSION}
-LABEL Maintainer="Tim de Pater <code@trafex.nl>"
-LABEL Description="Lightweight container with Nginx 1.20 & PHP 8.0 based on Alpine Linux."
+# Original Dockerfile from Time de Pater (code@trafx.nl)
+
+LABEL Maintainer="PaKu <pascal@pkit.eu>"
+LABEL Description="Lightweight container with Nginx 1.20 & PHP 8.0 based on Alpine Linux. Includes officemgr"
 # Setup document root
 WORKDIR /var/www/html
 
