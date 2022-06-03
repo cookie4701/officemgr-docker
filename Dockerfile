@@ -28,7 +28,8 @@ RUN apk add --no-cache \
   php8-xmlreader \
   php8-zlib \
   php8-tokenizer \
-  supervisor
+  supervisor \
+  git
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php8 /usr/bin/php
@@ -51,10 +52,10 @@ USER nobody
 
 # Add application
 # COPY --chown=nobody src/ /var/www/html/
-RUN mkdir /var/www/html/finances && \
-    chown nobody /var/www/html/finances
-
-COPY --chown=nobody finances/ /var/www/html/
+RUN mkdir /var/www/html && \
+    git clone https://github.com/cookie4701/officemgr.git officemgr
+    chown nobody /var/www/html/officemgr && \
+    
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
