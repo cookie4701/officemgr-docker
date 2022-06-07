@@ -1,17 +1,16 @@
 version: '3.5'
 services:
   app:
-          build: . 
+          build: .
           ports:
                   - "8080:8080"
                   - "8081:80"
                   - "8443:443"
           volumes:
-                  - ./nginx.server.conf:/etc/nginx/nginx.conf
-                  - finances_cache:/var/www/html/writable/cache
-                  - finances_debugbar:/var/www/html/writable/debugbar
-                  - finances_logs:/var/www/html/writable/logs
-                  - finances_uploads:/var/www/html/writable/uploads
+                  - finances_cache:/var/www/html/officemgr/writable/cache
+                  - finances_debugbar:/var/www/html/officemgr/writable/debugbar
+                  - finances_logs:/var/www/html/officemgr/writable/logs
+                  - finances_uploads:/var/www/html/officemgr/writable/uploads
 
 volumes:
         finances_cache:

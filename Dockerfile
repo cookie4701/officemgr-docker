@@ -26,10 +26,12 @@ RUN apk add --no-cache \
   php8-session \
   php8-xml \
   php8-xmlreader \
+  php8-xmlwriter \
   php8-zlib \
   php8-tokenizer \
   supervisor \
-  git
+  git \
+  composer
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php8 /usr/bin/php
@@ -51,11 +53,12 @@ RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 USER nobody
 
 # Add application
-# COPY --chown=nobody src/ /var/www/html/
-RUN mkdir /var/www/html && \
-    git clone https://github.com/cookie4701/officemgr.git officemgr
-    chown nobody /var/www/html/officemgr && \
-    
+RUN git clone https://github.com/cookie4701/officemgr.git officemgr  && \
+    cd officemgr && \
+    composer install && \
+    chmod 777 -R /var/www/html/officemgr/writable && \
+    chown nobody /var/www/html/officemgr
+
 
 # Expose the port nginx is reachable on
 EXPOSE 8080
@@ -65,4 +68,3 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 # Configure a healthcheck to validate that everything is up&running
 HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping
-
