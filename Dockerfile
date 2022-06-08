@@ -31,7 +31,8 @@ RUN apk add --no-cache \
   php8-tokenizer \
   supervisor \
   git \
-  composer
+  composer \
+  sed
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php8 /usr/bin/php
@@ -45,6 +46,9 @@ COPY config/php.ini /etc/php8/conf.d/custom.ini
 
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN mkdir /utils
+COPY scripts/replace_env.sh /utils/replace_env.sh
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
@@ -60,6 +64,11 @@ RUN git clone https://github.com/cookie4701/officemgr.git officemgr  && \
     mv /var/www/html/officemgr/env /var/www/html/officemgr/.env && \
     chown nobody /var/www/html/officemgr
 
+
+USER root
+RUN chmod ugo+x /utils/replace_env.sh
+
+USER nobody
 
 # Expose the port nginx is reachable on
 EXPOSE 8080

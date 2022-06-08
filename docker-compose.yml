@@ -13,7 +13,7 @@ services:
                   - finances_uploads:/var/www/html/officemgr/writable/uploads
 
           environment:
-                  - BASE_URL='http://localhost:8080'
+                  - ENV_BASEURL=http://localhost:8080
 
 volumes:
         finances_cache:
