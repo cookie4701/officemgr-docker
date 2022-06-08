@@ -57,6 +57,7 @@ RUN git clone https://github.com/cookie4701/officemgr.git officemgr  && \
     cd officemgr && \
     composer install && \
     chmod 777 -R /var/www/html/officemgr/writable && \
+    mv /var/www/html/officemgr/env /var/www/html/officemgr/.env && \
     chown nobody /var/www/html/officemgr
 
 

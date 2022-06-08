@@ -12,6 +12,9 @@ services:
                   - finances_logs:/var/www/html/officemgr/writable/logs
                   - finances_uploads:/var/www/html/officemgr/writable/uploads
 
+          environment:
+                  - BASE_URL='http://localhost:8080'
+
 volumes:
         finances_cache:
 
