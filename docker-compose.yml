@@ -12,8 +12,28 @@ services:
                   - finances_logs:/var/www/html/officemgr/writable/logs
                   - finances_uploads:/var/www/html/officemgr/writable/uploads
 
-          environment:
-                  - ENV_BASEURL=http://localhost:8080
+          env_file:
+            - .env
+
+          networks:
+            - frontend_office
+            - backend_office
+
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ENV_DB_ROOT_PASS}
+      MYSQL_DATABASE: ${ENV_DB_NAME}
+      MYSQL_USER: ${ENV_DB_USER}
+      MYSQL_PASSWORD: ${ENV_DB_PASS}
+
+    networks:
+      - backend
+    restart: on-failure
+
+    volumes:
+     - database_officemgr:/var/lib/mysql
+
 
 volumes:
         finances_cache:
@@ -23,3 +43,11 @@ volumes:
         finances_logs:
 
         finances_uploads:
+
+        database_officemgr:
+
+networks:
+  frontend_office:
+    driver: bridge
+  backend_office:
+    driver: bridge

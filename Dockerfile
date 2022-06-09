@@ -53,6 +53,7 @@ COPY scripts/replace_env.sh /utils/replace_env.sh
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 
+
 # Switch to use a non-root user from here on
 USER nobody
 
@@ -62,11 +63,16 @@ RUN git clone https://github.com/cookie4701/officemgr.git officemgr  && \
     composer install && \
     chmod 777 -R /var/www/html/officemgr/writable && \
     mv /var/www/html/officemgr/env /var/www/html/officemgr/.env && \
-    chown nobody /var/www/html/officemgr
+    chown -R nobody.nobody /var/www/html/officemgr
 
 
 USER root
 RUN chmod ugo+x /utils/replace_env.sh
+RUN mkdir /var/www/html/officemgr/writable/debugbar && \
+  mkdir /var/www/html/officemgr/writable/cache && \
+  mkdir /var/www/html/officemgr/writable/logs && \
+  mkdir /var/www/html/officemgr/writable/uploads
+RUN chown -R nobody.nobody /var/www/html/officemgr/writable
 
 USER nobody
 
