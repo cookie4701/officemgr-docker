@@ -1,0 +1,25 @@
+version: '3.5'
+services:
+  app:
+          build: .
+          ports:
+                  - "8080:8080"
+                  - "8081:80"
+                  - "8443:443"
+          volumes:
+                  - finances_cache:/var/www/html/officemgr/writable/cache
+                  - finances_debugbar:/var/www/html/officemgr/writable/debugbar
+                  - finances_logs:/var/www/html/officemgr/writable/logs
+                  - finances_uploads:/var/www/html/officemgr/writable/uploads
+
+          env_file:
+            - .env
+
+volumes:
+        finances_cache:
+
+        finances_debugbar:
+
+        finances_logs:
+
+        finances_uploads:
