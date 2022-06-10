@@ -6,3 +6,4 @@ sed -i  "s#ENV_DB_USER#$ENV_DB_USER#" /var/www/html/officemgr/.env
 sed -i  "s#ENV_DB_PASS#$ENV_DB_PASS#" /var/www/html/officemgr/.env
 sed -i  "s#ENV_DB_HOST#$ENV_DB_HOST#" /var/www/html/officemgr/.env
 sed -i  "s#ENV_DB_NAME#$ENV_DB_NAME#" /var/www/html/officemgr/.env
+sed -i  "s#MYHOSTNAME#$ENV_SERVER_NAME#" /etc/nginx/nginx.conf
